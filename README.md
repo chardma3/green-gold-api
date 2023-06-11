@@ -4,15 +4,13 @@ The Green Gold API is a Node.js and Express-based API that allows users to searc
 
 ## Installation
 
-1. Clone the repository:
-
-```shell
-git clone https://github.com/your-username/green-gold-api.git
+Clone the repository:
+git clone https://github.com/chardma3/green-gold-api.git
 
 cd green-gold-api
 npm install
 
-1. Start the server
+Start the server by typing:
 npm start
 
 Access the API endpoints:
@@ -36,12 +34,9 @@ Submit a pull request.
 ## License
 The Green Gold API is released under the MIT License.
 
-
 ## Credits
 Node.js
 Express
 
-
 ## Contact Information
 For any questions or support, please contact chardma3@hotmail.com.
-```
