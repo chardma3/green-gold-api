@@ -1,4 +1,4 @@
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 const axios = require('axios');
 const cheerio = require('cheerio');
 const express = require('express');
@@ -113,6 +113,7 @@ app.get('/news', (req, res) => {
         })
         .catch((error) => {
           console.error(`Error scraping ${newspaper.name}:`, error.message);
+          res.status(400).json({ error: `Error scraping ${newspaper.name}` });
         })
     )
   )
@@ -172,6 +173,21 @@ app.get('/news/:newspaperId', (req, res) => {
       console.error(`Error scraping ${selectedNewspaper.name}:`, error.message);
       res.status(500).json({ error: 'Internal Server Error' });
     });
+});
+
+// Error handling middleware for general 400 errors
+app.use((err, req, res, next) => {
+  if (err.status === 400) {
+    res.status(400).json({ error: 'Bad Request' });
+  } else {
+    next(err);
+  }
+});
+
+// Error handling middleware for general 500 errors
+app.use((err, req, res, next) => {
+  console.error('Error:', err.message);
+  res.status(500).json({ error: 'Internal Server Error' });
 });
 
 app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));
