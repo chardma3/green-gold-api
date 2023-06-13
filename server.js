@@ -158,7 +158,7 @@ app.get('/news/:newspaperId', (req, res) => {
           source: newspaperId,
         });
       });
-      articles = articles.filter((article) => {
+      specificArticles = specificArticles.filter((article) => {
         const { title } = article;
         const words = title.split(' ');
         return !title.includes('<') && words.length > 3 && words.length <= 20;
