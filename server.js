@@ -6,6 +6,35 @@ const app = express();
 const cors = require('cors');
 app.use(cors());
 
+// Helper function to capitalize the newspaper name
+function capitalizeFirstLetter(name) {
+  return name.charAt(0).toUpperCase() + name.slice(1);
+}
+
+// Helper function to modify specific newspaper names
+function modifyNewspaperName(name) {
+  switch (name) {
+    case 'wallstreetjournal':
+      return 'Wall Street Journal';
+    case 'financialtimes':
+      return 'Financial Times';
+    case 'thetimes':
+      return 'The Times';
+    case 'latimes':
+      return 'LA Times';
+    case 'nyt':
+      return 'NY Times';
+    case 'smh':
+      return 'SMH';
+    case 'bbc':
+      return 'BBC';
+    case 'nyp':
+      return 'NY Post';
+    default:
+      return capitalizeFirstLetter(name);
+  }
+}
+
 const newspapers = [
   {
     name: 'bloomberg',
@@ -95,8 +124,8 @@ app.get('/news', (req, res) => {
             }
             articles.push({
               title,
+              source: modifyNewspaperName(newspaper.name),
               url,
-              source: newspaper.name,
             });
           });
           articles = articles.filter((article) => {
@@ -154,8 +183,8 @@ app.get('/news/:newspaperId', (req, res) => {
         }
         specificArticles.push({
           title,
+          source: modifyNewspaperName(newspaperId),
           url,
-          source: newspaperId,
         });
       });
       specificArticles = specificArticles.filter((article) => {
