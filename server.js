@@ -132,7 +132,9 @@ app.get('/news', (req, res) => {
             const { title } = article;
             const words = title.split(' ');
             return (
-              !title.includes('<') && words.length > 3 && words.length <= 20
+              !title.includes('<', '}') &&
+              words.length >= 3 &&
+              words.length <= 20
             );
           });
           articles = articles.filter(
@@ -190,7 +192,9 @@ app.get('/news/:newspaperId', (req, res) => {
       specificArticles = specificArticles.filter((article) => {
         const { title } = article;
         const words = title.split(' ');
-        return !title.includes('<') && words.length > 3 && words.length <= 20;
+        return (
+          !title.includes('<', '}') && words.length >= 3 && words.length <= 20
+        );
       });
       specificArticles = specificArticles.filter(
         (value, index, self) =>
