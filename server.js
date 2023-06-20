@@ -131,10 +131,15 @@ app.get('/news', (req, res) => {
           articles = articles.filter((article) => {
             const { title } = article;
             const words = title.split(' ');
+
+            const forbiddenChars = ['<', '}'];
+
+            const containsForbiddenChars = forbiddenChars.some((char) =>
+              title.includes(char)
+            );
+
             return (
-              !title.includes('<', '}') &&
-              words.length >= 3 &&
-              words.length <= 20
+              !containsForbiddenChars && words.length > 3 && words.length <= 20
             );
           });
           articles = articles.filter(
@@ -192,8 +197,14 @@ app.get('/news/:newspaperId', (req, res) => {
       specificArticles = specificArticles.filter((article) => {
         const { title } = article;
         const words = title.split(' ');
+        const forbiddenChars = ['<', '}'];
+
+        const containsForbiddenChars = forbiddenChars.some((char) =>
+          title.includes(char)
+        );
+
         return (
-          !title.includes('<', '}') && words.length >= 3 && words.length <= 20
+          !containsForbiddenChars && words.length > 3 && words.length <= 20
         );
       });
       specificArticles = specificArticles.filter(
